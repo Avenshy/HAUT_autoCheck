@@ -73,7 +73,7 @@ def getUserJson(userInfo,token):
     temperature = round(a, 1)
     return  {
         "businessType": "epmpics",
-        "method": "submitUpInfoSchool",
+        "method": "submitUpInfo",
         "jsonData": {
         "deptStr": {
             "deptid": userInfo['classId'],
@@ -85,22 +85,67 @@ def getUserJson(userInfo,token):
         "customerid": userInfo['customerId'],
         "deptid": userInfo['classId'],
         "source": "app",
-        "templateid": "clockSign2",
+        "templateid": "pneumonia",
         "stuNo": userInfo['stuNo'],
         "username": userInfo['username'],
         "userid": round(time.time()),
-        "updatainfo": [  
-            {
+        "updatainfo": [{
                 "propertyname": "temperature",
-                "value": temperature
-            },
-            {
+                "value": "36.5"
+            }, {
                 "propertyname": "symptom",
                 "value": "无症状"
+            }, {
+                "propertyname": "isConfirmed",
+                "value": "否"
+            }, {
+                "propertyname": "isdefinde",
+                "value": "否.未隔离"
+            }, {
+                "propertyname": "isGoWarningAdress",
+                "value": "否"
+            }, {
+                "propertyname": "isTouch",
+                "value": "否"
+            }, {
+                "propertyname": "isFFHasSymptom",
+                "value": "没有"
+            }, {
+                "propertyname": "isContactFriendIn14",
+                "value": "没有"
+            }, {
+                "propertyname": "xinqing",
+                "value": "健康"
+            }, {
+                "propertyname": "bodyzk",
+                "value": "否"
+            }, {
+                "propertyname": "cxjh",
+                "value": "否"
+            }, {
+                "propertyname": "isleaveaddress",
+                "value": "否"
+            }, {
+                "propertyname": "gtjz0511",
+                "value": "否"
+            }, {
+                "propertyname": "medicalObservation",
+                "value": "绿色"
+            }, {
+                "propertyname": "ownPhone",
+                "value": "15992646144"
+            }, {
+                "propertyname": "emergencyContact",
+                "value": "黄纯贵"
+            }, {
+                "propertyname": "mergencyPeoplePhone",
+                "value": "13727896670"
+            }, {
+                "propertyname": "assistRemark",
+                "value": ""
             }
         ],
-        "customerAppTypeRuleId": 147,
-        "clockState": 0,
+        "gpsType": 0,
         "token": token
         },
         "token": token
