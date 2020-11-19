@@ -59,6 +59,7 @@ def main():
         wechatPush(title,sckey[0],success,fail,result)
     except:
         print("微信推送出错！")
+        print(title,sckey[0],success,fail,result)
 
 #时间函数
 def getNowTime():
