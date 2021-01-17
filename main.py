@@ -16,14 +16,15 @@ def main():
     while True:  
         try:
             users = input()
-            print(users)
             info = users.split(',')
             phone.append(info[0])
             password.append(info[1])
             sckey.append(info[2])
         except:
             break
-
+    print(phone)
+    print(password)
+    print(sckey)
     #提交打卡
     for index,value in enumerate(phone):
         print("开始尝试为用户%s打卡" % (value))
