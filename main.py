@@ -16,6 +16,7 @@ def main():
     while True:  
         try:
             users = input()
+            print(users)
             info = users.split(',')
             phone.append(info[0])
             password.append(info[1])
