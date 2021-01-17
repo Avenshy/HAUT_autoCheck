@@ -25,7 +25,7 @@ def main():
 
     #提交打卡
     for index,value in enumerate(phone):
-        print("开始尝试为用户%s打卡" % (userInfo['username']))
+        print("开始尝试为用户%s打卡" % (value))
         count = 0
         while (count <= 3):
             try:
