@@ -57,14 +57,14 @@ def main():
                     time.sleep(5)
             except Exception as e:
                 print(e.__class__)
-                failure.append(userInfo['username'])
+                failure.append(value)
                 strTime = getNowTime()
-                msg = strTime + userInfo['username'] + "出现错误"
+                msg = strTime + value + "出现错误"
                 count = count + 1
                 if index == 0:
                     result = response
                 if count <= 3:
-                    print('%s打卡出错，开始第%d次重试...' % (userInfo['username'],count))
+                    print('%s打卡出错，开始第%d次重试...' % (value,count))
                 time.sleep(1)
         print(msg)
         print("-----------------------")
