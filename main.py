@@ -7,7 +7,7 @@ from campus import CampusCard
 
 def main():
     #校内校外开关
-    mark = 1
+    mark = 0
     #定义变量
     success,failure = [],[]
     #sectets字段录入
@@ -33,7 +33,8 @@ def main():
                 token = campus.user_info["sessionId"]
                 userInfo = getUserInfo(token)
                 if mark == 0:
-                    response = checkIn(userInfo,token)
+                    ownPhone = phone[index]
+                    response = checkIn(ownPhone,userInfo,token)
                 if mark == 1:
                     ownPhone = phone[index]
                     response = check(ownPhone,userInfo,token)
@@ -91,42 +92,89 @@ def getUserInfo(token):
     return response.json()['userInfo']
 
 #校内打卡提交函数
-def checkIn(userInfo,token):
+def checkIn(ownPhone,userInfo,token):
     sign_url = "https://reportedh5.17wanxiao.com/sass/api/epmpics"
      #随机温度(36.2~36.8)
     a = random.uniform(36.2,36.8)
     temperature = round(a, 1)
     jsons = {
-            "businessType": "epmpics",
-            "method": "submitUpInfoSchool",
-            "jsonData": {
-            "deptStr": {
-                "deptid": userInfo['classId'],
-                "text": userInfo['classDescription']
-            },
-            #如果你来自其他学校，请自行打卡抓包修改地址字段
-            "areaStr": {"streetNumber":"","street":"长椿路辅路","district":"中原区","city":"郑州市","province":"河南省","town":"","pois":"河南工业大学(莲花街校区)","lng":113.55064699999795 + random.random() / 1000,"lat":34.83870696238093 + random.random() / 1000,"address":"中原区长椿路辅路河南工业大学(莲花街校区)","text":"河南省-郑州市","code":""},
-            "reportdate": round(time.time() * 1000),
-            "customerid": userInfo['customerId'],
+        "businessType": "epmpics",
+        "method": "submitUpInfo",
+        "jsonData": {
+        "deptStr": {
             "deptid": userInfo['classId'],
-            "source": "app",
-            "templateid": "clockSign2",
-            "stuNo": userInfo['stuNo'],
-            "username": userInfo['username'],
-            "userid": round(time.time()),
-            "updatainfo": [{
-                    "propertyname": "temperature",
-                    "value": temperature
-                },
-                {
-                    "propertyname": "symptom",
-                    "value": "无症状"
-                }],
-            "customerAppTypeRuleId": 147,
-            "clockState": 0,
-            "token": token
-            },
-            "token": token
+            "text": userInfo['classDescription']
+        },
+        #如果你来自其他学校，请自行打卡抓包修改地址字段
+        "areaStr": {"address":"","text":"湖南省-株洲市-天元区","code":"430211"},
+        "reportdate": round(time.time()*1000),
+        "customerid": userInfo['customerId'],
+        "deptid": userInfo['classId'],
+        "source": "app",
+        "templateid": "pneumonia",
+        "stuNo": userInfo['stuNo'],
+        "username": userInfo['username'],
+        "userid": round(time.time()),
+        "updatainfo": [{
+                "propertyname": "temperature",
+                "value": temperature
+            }, {
+                "propertyname": "symptom",
+                "value": "无症状"
+            }, {
+                "propertyname": "isConfirmed",
+                "value": "否"
+            }, {
+                "propertyname": "isdefinde",
+                "value": "否.未隔离"
+            }, {
+                "propertyname": "isGoWarningAdress",
+                "value": "否"
+            }, {
+                "propertyname": "isTouch",
+                "value": "否"
+            }, {
+                "propertyname": "isFFHasSymptom",
+                "value": "没有"
+            }, {
+                "propertyname": "isContactFriendIn14",
+                "value": "没有"
+            }, {
+                "propertyname": "xinqing",
+                "value": "健康"
+            }, {
+                "propertyname": "bodyzk",
+                "value": "否"
+            }, {
+                "propertyname": "cxjh",
+                "value": "否"
+            }, {
+                "propertyname": "isleaveaddress",
+                "value": "否"
+            }, {
+                "propertyname": "gtjz0511",
+                "value": "否"
+            }, {
+                "propertyname": "medicalObservation",
+                "value": "绿色"
+            }, {
+                "propertyname": "ownPhone",
+                "value": ownPhone
+            }, {
+                "propertyname": "emergencyContact",
+                "value": userInfo['username']
+            }, {
+                "propertyname": "mergencyPeoplePhone",
+                "value": ownPhone
+            }, {
+                "propertyname": "assistRemark",
+                "value": ""
+            }
+        ],
+        "gpsType": 0,
+        "token": token
+        },
+        "token": token
     }
     #提交打卡
     response = requests.post(sign_url, json=jsons)
@@ -146,6 +194,7 @@ def check(ownPhone,userInfo,token):
     }      
     response = requests.post(sign_url, json=post_json).json()
     data = json.loads(response['data'])
+    print(data)
     info_dict = {
             "add":data['add'],
             "areaStr": data['areaStr'],
