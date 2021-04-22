@@ -22,9 +22,6 @@ def main():
             sckey.append(info[2])
         except:
             break
-    print(phone)
-    print(password)
-    print(sckey)
     #提交打卡
     for index,value in enumerate(phone):
         print("开始尝试为用户%s打卡" % (value))
@@ -65,7 +62,10 @@ def main():
                 msg = strTime + value + "出现错误"
                 count = count + 1
                 if index == 0:
-                    result = response
+                    try:
+                        result = response
+                    except:
+                        result=userInfo
                 if count <= 3:
                     print('%s打卡出错，开始第%d次重试...' % (value,count))
                 time.sleep(1)
@@ -87,7 +87,7 @@ def getNowTime():
 
 #信息获取函数
 def getUserInfo(token):
-    token = {'token':token}
+    token = {"appClassify": "DK",'token':token}
     sign_url = "https://reportedh5.17wanxiao.com/api/clock/school/getUserInfo"
     #提交打卡
     response = requests.post(sign_url, data=token)
